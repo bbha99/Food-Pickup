@@ -1,30 +1,19 @@
 const db = require('../connection');
 
-const { Pool } = require('pg');
-const { query } = require('express');
-const pool = new Pool({
-  user: 'labber',
-  password: 'labber',
-  host: 'localhost',
-  database: 'midterm'
-});
-
 const getFoodItems = () => {
-  return pool
+  return db
   .query(`
   SELECT *
-  FROM foods
-  LIMIT 5;
+  FROM foods;
   `)
   .then(result => {
-  console.log(result.rows);
   return result.rows;
   })
   .catch(err => console.error('query error', err.stack));
   };
 
 const getFoodByOwnerId = (id) => {
-  return pool
+  return db
   .query(`
   SELECT *
   FROM foods
@@ -42,7 +31,7 @@ const getFoodByOwnerId = (id) => {
 const addFoodItem = (food) => {
   let values = [food.name, food.description, food.image_url, food.price, food.owner_id];
 
-  return pool
+  return db
   .query(`
   INSERT INTO foods (name, description, image_url, price, owner_id)
   VALUES ($1, $2, $3, $4, $5)
@@ -58,4 +47,13 @@ const addFoodItem = (food) => {
   });
 };
 
-module.exports = { getFoodItems, getFoodByOwnerId, addFoodItem };
+const deleteItem = (id) => {
+  console.log("in db query ",id)
+  return db.query('DELETE FROM foods WHERE id = $1;', [id])
+  .then(deletedData => {
+    console.log("we are in the deleted Query then block", deletedData);
+    return ({result: "deleted"});
+  });
+};
+
+module.exports = { getFoodItems, getFoodByOwnerId, addFoodItem, deleteItem };

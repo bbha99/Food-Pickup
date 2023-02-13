@@ -1,7 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 
-const userQueries = require('../db/queries/users');
+const foodQueries = require('../db/queries/foods');
 
 router.get('/', (req, res) => {
   const userId = req.session.user_id;
@@ -38,7 +38,7 @@ router.post('/admin/:id/delete', (req, res) => {
     const deletedId = req.params.id;
 
     console.log("TEST deletedId, userID, userRole ", deletedId, userId, userRole);
-    userQueries.deleteItem(deletedId)
+    foodQueries.deleteItem(deletedId)
     .then(item => {
       console.log("this is the item deleted: ", item)
       res.json({ item });

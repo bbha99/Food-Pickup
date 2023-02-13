@@ -1,20 +1,10 @@
 const db = require('../connection');
 
-const { Pool } = require('pg');
-const { query } = require('express');
-const pool = new Pool({
-  user: 'labber',
-  password: 'labber',
-  host: 'localhost',
-  database: 'midterm'
-});
-
 const getUsers = () => {
-  return pool
+  return db
   .query(`
   SELECT *
-  FROM users
-  LIMIT 5;
+  FROM users;
   `)
   .then(result => {
   console.log(result.rows);
@@ -24,7 +14,7 @@ const getUsers = () => {
   };
 
 const getUserWithId = (id) => {
-  return pool
+  return db
   .query(`
   SELECT *
   FROM users
@@ -40,7 +30,7 @@ const getUserWithId = (id) => {
 };
 
 const getUsersByRole = (role) => {
-  return pool
+  return db
   .query(`
   SELECT *
   FROM users
@@ -58,7 +48,7 @@ const getUsersByRole = (role) => {
 const addUser =  function(user) {
   let values = [user.name, user.role];
 
-  return pool
+  return db
   .query(`
   INSERT INTO users (name, role)
   VALUES ($1, $2)
@@ -82,20 +72,4 @@ const checkUserRole = (id) => {
   });
 }
 
-const getFoodItems = () => {
-  return db.query('SELECT * FROM foods;')
-    .then(data => {
-      return data.rows;
-    });
-};
-
-const deleteItem = (id) => {
-  console.log("in db query ",id)
-  return db.query('DELETE FROM foods WHERE id = $1;', [id])
-  .then(deletedData => {
-    console.log("we are in the deleted Query then block", deletedData);
-    return ({result: "deleted"});
-    // return deletedData.rows[0];
-  });
-};
-module.exports = { getUsers, getUserWithId, getUsersByRole, addUser, checkUserRole, getFoodItems, deleteItem };
+module.exports = { getUsers, getUserWithId, getUsersByRole, addUser, checkUserRole };
