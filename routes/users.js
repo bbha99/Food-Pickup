@@ -19,19 +19,20 @@ router.get('/:id', (req, res) => {
   const id = req.params.id;
   userQueries.checkUserRole(id)
   .then(user => {
-    req.session.userId = user.id;
+    req.session.user_id = user.id;
+    req.session.user_role = user.role;
     if (user.role === 'admin') {
       res.render('homepage_admin');
     } else {
       res.render('homepage_user');
     }
   })
-  .catch(e => res.send(e.message, 500));
+  .catch(e => res.send(e.message));
 });
 
-// Need to fix this
 router.post("/logout", (req, res) => {
   req.session = null;
+  res.render('index');
 });
 
 

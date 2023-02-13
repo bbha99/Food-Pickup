@@ -14,7 +14,7 @@ const app = express();
 
 app.use(cookieSession({
   name: 'currentSession',
-  keys: ["user_id"],
+  keys: ["user_id", "user_role"],
 }));
 
 app.set('view engine', 'ejs');
