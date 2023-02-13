@@ -12,9 +12,6 @@ $(() => {
       <p class="price-total">$${foodObj.price/100}</p>
       <img src="${foodObj.image_url}" alt="food item" width="200px" height="200px">
       <div class="quantity-border">
-        <button class="subtract">-</button>
-        <p class="quantity">0</p>
-        <button class="add">+</button>
       </div>
     </div>`);
     return $food;
@@ -51,6 +48,25 @@ const loadMenuItems = function() {
       cartObject[foodDataItem.id] = {foodDataItem, quantity: 0};
       const $foodItem = createFoodElement(foodDataItem);
       $foodsList.append($foodItem);
+    }
+
+    // Adds minus, plus button to each item on user homepage
+    const bodyId = $("body").attr('id');
+    const quantityDeleteButton = $(".quantity-border");
+    // console.log("bodyId", bodyId);
+    if (bodyId === "customer") {
+      const quantityButton = $(`
+      <button class="subtract">-</button>
+      <p class="quantity">0</p>
+      <button class="add">+</button>
+      `);
+      quantityDeleteButton.append(quantityButton);
+    }
+
+    // Adds delete button to each item on admin homepage
+    if (bodyId === "admin") {
+      const deleteButton = $(`<button class="deleteItem">Delete</button>`);
+      quantityDeleteButton.append(deleteButton);
     }
 
     // console.log("cartObject", cartObject[1].foodDataItem)
@@ -117,12 +133,31 @@ const loadMenuItems = function() {
         console.log("Error: Negative quantity number is not possible");
       }
     });
+
+    $('.deleteItem').on('click', function (event) {
+      const item = $(this).closest('.item-border')
+      const itemId = item.attr('id');
+      $.ajax({
+        method: 'POST',
+        url: `/menu/admin/${itemId}/delete`
+      })
+      .then ((res) => {
+        if(res.item.result==="deleted"){
+          alert("Record deleted!");
+        } else {
+
+        }
+        console.log("Deleted:", res.item.result);
+        item.remove();
+      })
+    });
   });
 }
+
+loadMenuItems()
 
 $('#order-button').on('click', function (event) {
   console.log("cartObject", cartObject)
 });
 
-loadMenuItems()
 });
