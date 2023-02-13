@@ -22,9 +22,9 @@ router.get('/:id', (req, res) => {
     req.session.user_id = user.id;
     req.session.user_role = user.role;
     if (user.role === 'admin') {
-      res.render('homepage_admin');
+      res.redirect('../menu/admin');
     } else {
-      res.render('homepage_user');
+      res.redirect('../menu')
     }
   })
   .catch(e => res.send(e.message));
