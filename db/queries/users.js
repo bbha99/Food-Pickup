@@ -74,6 +74,21 @@ const addUser =  function(user) {
   });
 };
 
+const checkUserRole = (id) => {
+  console.log("id", id)
+  return db.query('SELECT * FROM users WHERE id = $1;', [id])
+  .then(data => {
+    return data.rows[0];
+  });
+}
+
+const getFoodItems = () => {
+  return db.query('SELECT * FROM foods;')
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const deleteItem = (id) => {
   console.log("in db query ",id)
   return db.query('DELETE FROM foods WHERE id = $1;', [id])
@@ -83,4 +98,4 @@ const deleteItem = (id) => {
     // return deletedData.rows[0];
   });
 };
-module.exports = { getUsers, getUserWithId, getUsersByRole, addUser, deleteItem };
+module.exports = { getUsers, getUserWithId, getUsersByRole, addUser, checkUserRole, getFoodItems, deleteItem };
