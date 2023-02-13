@@ -1,0 +1,29 @@
+.nav-container {
+  height: 80px;
+  width: 100vw;
+  background-color: black;
+  color: #FFFFFF;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  row-gap: 100px;
+
+  #nav-options {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+
+    li {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+}
+
