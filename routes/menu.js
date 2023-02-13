@@ -9,11 +9,11 @@ router.get('/', (req, res) => {
   // console.log("UserID", userId);
   // console.log("UserRole", userRole);
   if (userRole === 'admin') {
-    res.render('homepage_admin');
+    res.redirect('../menu/admin')
   } else if (userRole === 'customer') {
     res.render('homepage_user');
   } else {
-    res.render('index');
+    res.redirect('../');
   }
 });
 
@@ -23,9 +23,9 @@ router.get('/admin', (req, res) => {
   if (userRole === 'admin') {
     res.render('homepage_admin');
   } else if (userRole === 'customer') {
-    res.render('homepage_user');
+    res.redirect('../menu')
   } else {
-    res.render('index');
+    res.redirect('../');
   }
 })
 

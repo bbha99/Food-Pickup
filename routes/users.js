@@ -32,7 +32,7 @@ router.get('/:id', (req, res) => {
 
 router.post("/logout", (req, res) => {
   req.session = null;
-  res.render('index');
+  res.redirect('../');
 });
 
 
