@@ -8,6 +8,8 @@
 const express = require('express');
 const router  = express.Router();
 const userQueries = require('../db/queries/users');
+const foodQueries = require('../db/queries/foods')
+
 
 router.get('/', (req, res) => {
   userQueries.getUsers()
@@ -23,7 +25,7 @@ router.get('/', (req, res) => {
 
 // Sends back the food items to the frontend
 router.get('/food', (req, res) => {
-  userQueries.getFoodItems()
+  foodQueries.getFoodItems()
   .then(foods => {
     res.json({foods});
   });
