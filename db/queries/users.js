@@ -1,25 +1,77 @@
 const db = require('../connection');
 
+const { Pool } = require('pg');
+const { query } = require('express');
+const pool = new Pool({
+  user: 'labber',
+  password: 'labber',
+  host: 'localhost',
+  database: 'midterm'
+});
+
 const getUsers = () => {
-  return db.query('SELECT * FROM users;')
-    .then(data => {
-      return data.rows;
-    });
-};
+  return pool
+  .query(`
+  SELECT *
+  FROM users
+  LIMIT 5;
+  `)
+  .then(result => {
+  console.log(result.rows);
+  return result.rows;
+  })
+  .catch(err => console.error('query error', err.stack));
+  };
 
-const checkUserRole = (id) => {
-  console.log("id", id)
-  return db.query('SELECT * FROM users WHERE id = $1;', [id])
-  .then(data => {
-    return data.rows[0];
+const getUserWithId = (id) => {
+  return pool
+  .query(`
+  SELECT *
+  FROM users
+  WHERE id = $1;
+  `, [id])
+  .then(result => {
+  console.log(result.rows);
+  return result.rows[0];
+  })
+  .catch((err) => {
+    return null;
   });
-}
-
-const getFoodItems = () => {
-  return db.query('SELECT * FROM foods;')
-    .then(data => {
-      return data.rows;
-    });
 };
 
-module.exports = { getUsers, checkUserRole, getFoodItems };
+const getUsersByRole = (role) => {
+  return pool
+  .query(`
+  SELECT *
+  FROM users
+  WHERE role = $1;
+  `, [role])
+  .then(result => {
+  console.log(result.rows);
+  return result.rows;
+  })
+  .catch((err) => {
+    return null;
+  });
+};
+
+const addUser =  function(user) {
+  let values = [user.name, user.role];
+
+  return pool
+  .query(`
+  INSERT INTO users (name, role)
+  VALUES ($1, $2)
+  RETURNING *;
+  `, values)
+  .then((result) => {
+    console.log(result.rows);
+    return result.rows[0];
+  })
+  .catch((err) => {
+    console.error(null);
+    return null;
+  });
+};
+
+module.exports = { getUsers, getUserWithId, getUsersByRole, addUser };
