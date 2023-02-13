@@ -8,8 +8,31 @@
 const express = require('express');
 const router  = express.Router();
 
+const userQueries = require('../db/queries/users');
+
 router.get('/', (req, res) => {
   res.render('users');
-}); 
+});
+
+// Login a specific user
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+  userQueries.checkUserRole(id)
+  .then(user => {
+    req.session.userId = user.id;
+    if (user.role === 'admin') {
+      res.render('homepage_admin');
+    } else {
+      res.render('homepage_user');
+    }
+  })
+  .catch(e => res.send(e.message, 500));
+});
+
+// Need to fix this
+router.post("/logout", (req, res) => {
+  req.session = null;
+});
+
 
 module.exports = router;

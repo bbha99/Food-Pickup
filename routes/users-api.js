@@ -21,4 +21,12 @@ router.get('/', (req, res) => {
     });
 });
 
+// Sends back the food items to the frontend
+router.get('/food', (req, res) => {
+  userQueries.getFoodItems()
+  .then(foods => {
+    res.json({foods});
+  });
+});
+
 module.exports = router;
