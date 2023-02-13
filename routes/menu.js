@@ -29,5 +29,30 @@ router.get('/admin', (req, res) => {
   }
 })
 
+
+router.post('/admin/:id/delete', (req, res) => {
+  const userId = req.session.user_id;
+  const userRole = req.session.user_role;
+
+  if (userRole === 'admin') {
+    const deletedId = req.params.id;
+
+    console.log("TEST deletedId, userID, userRole ", deletedId, userId, userRole);
+    userQueries.deleteItem(deletedId)
+    .then(item => {
+      console.log("this is the item deleted: ", item)
+      res.json({ item });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({result: "error"});
+        // .json({ error: err.message });
+    });
+  } else {
+    return res.send("Must be logged in to delete");
+  }
+})
+
 module.exports = router;
 

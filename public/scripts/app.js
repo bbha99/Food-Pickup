@@ -65,7 +65,7 @@ const loadMenuItems = function() {
 
     // Adds delete button to each item on admin homepage
     if (bodyId === "admin") {
-      const deleteButton = $(`<button>Delete</button>`);
+      const deleteButton = $(`<button class="deleteItem">Delete</button>`);
       quantityDeleteButton.append(deleteButton);
     }
 
@@ -133,12 +133,31 @@ const loadMenuItems = function() {
         console.log("Error: Negative quantity number is not possible");
       }
     });
+
+    $('.deleteItem').on('click', function (event) {
+      const item = $(this).closest('.item-border')
+      const itemId = item.attr('id');
+      $.ajax({
+        method: 'POST',
+        url: `/menu/admin/${itemId}/delete`
+      })
+      .then ((res) => {
+        if(res.item.result==="deleted"){
+          alert("Record deleted!");
+        } else {
+
+        }
+        console.log("Deleted:", res.item.result);
+        item.remove();
+      })
+    });
   });
 }
+
+loadMenuItems()
 
 $('#order-button').on('click', function (event) {
   console.log("cartObject", cartObject)
 });
 
-loadMenuItems()
 });
