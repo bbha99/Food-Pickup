@@ -8,7 +8,8 @@
 const express = require('express');
 const router  = express.Router();
 const userQueries = require('../db/queries/users');
-const foodQueries = require('../db/queries/foods')
+const foodQueries = require('../db/queries/foods');
+const orderQueries = require('../db/queries/orders');
 
 
 router.get('/', (req, res) => {
@@ -28,6 +29,16 @@ router.get('/food', (req, res) => {
   foodQueries.getFoodItems()
   .then(foods => {
     res.json({foods});
+  });
+});
+
+router.get('/order', (req, res) => {
+  orderQueries.getOrderItems()
+  .then(orders => {
+    orderQueries.getOrderIds()
+    .then(orderIds => {
+      res.json({orders, orderIds});
+    });
   });
 });
 

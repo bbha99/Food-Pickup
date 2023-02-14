@@ -11,7 +11,7 @@ const client = require('twilio')(accountSid, authToken);
 
 const orderQueries = require('../db/queries/orders');
 
-// Notify user by SMS order is pending
+// Notify user by SMS that order is pending
 function pendingTwilio() {
   client.messages
   .create({
@@ -22,6 +22,7 @@ function pendingTwilio() {
   .then((message) => console.log(message.sid));
 }
 
+// Displays the order number for the user
 router.get('/', (req, res) => {
   const userId = req.session.user_id;
   const userRole = req.session.user_role;
@@ -38,6 +39,20 @@ router.get('/', (req, res) => {
 
 });
 
+router.get('/history/admin', (req, res) => {
+  const userId = req.session.user_id;
+  const userRole = req.session.user_role;
+
+  if (userRole === 'admin') {
+    res.render('order_page_admin');
+  } else {
+    res.send("error");
+  }
+
+});
+
+
+// Creates a new order and items associated with the order
 router.post('/', (req, res) => {
   const userId = req.session.user_id;
   const userRole = req.session.user_role;
