@@ -22,6 +22,16 @@ function pendingTwilio() {
   .then((message) => console.log(message.sid));
 }
 
+function confirmTwilio(time) {
+  client.messages
+  .create({
+    body: `Order is has been confirmed. Time remaining is ${time} minutes`,
+    to: process.env.PHONE, // Text this number
+    from: `${process.env.TWILIO_PHONE}`, // From a valid Twilio number
+  })
+  .then((message) => console.log(message.sid));
+}
+
 // Displays the order number for the user
 router.get('/', (req, res) => {
   const userId = req.session.user_id;
@@ -65,7 +75,7 @@ router.post('/', (req, res) => {
     .then(orderData => {
       const orderId = orderData.id;
 
-      // pendingTwilio();
+      pendingTwilio();
 
       // Add items and their quantities to order cart
       for (const cartItem in cartData) {
@@ -84,6 +94,15 @@ router.post('/', (req, res) => {
         .json({result: "error"});
     });
   }
+});
+
+router.post('/edit', (req, res) => {
+  const time = Number(req.body.selectedTime);
+
+  confirmTwilio(time);
+
+
+  res.json({time})
 });
 
 module.exports = router;

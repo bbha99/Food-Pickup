@@ -33,9 +33,47 @@ $(() => {
           orderStatus = data.order_status;
         }
       }
-      $currentOrder =`<div class="order-item">` + $currentOrderDetails + `<p>Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost}</p>` + `</div>`;
+      let orderStatusOptions = ``;
+      if (orderStatus === 'pending') {
+        orderStatusOptions= `
+        <div class="ready-status">
+          <button class="time-option">20</button>
+          <button class="time-option">40</button>
+          <button class="time-option">60</button>
+        </div>
+        `
+      } else if (orderStatus === 'Not Ready') {
+        orderStatusOptions= `
+        <div class="ready-status">
+          <button>Ready for Pickup</button>
+        </div>
+        `
+      }
+      $currentOrder =`<div class="order-item">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost}</p>`+ orderStatusOptions + `</div>`;
       $orders.append($currentOrder);
     }
+
+    let $readyStatus = $(".ready-status");
+
+    $(".time-option").on('click', function () {
+      const selectedTime = $(this).text();
+      $(".time-option").remove();
+      $readyStatus.append($(`
+          <button>Ready for Pickup</button>
+        `));
+
+      $.ajax({
+        method: 'POST',
+        url: '/order/edit',
+        data: {selectedTime : selectedTime}
+      })
+      .then ((res) => {
+        console.log("returned is: ", res);
+      })
+
+
+
+    });
   });
 
 

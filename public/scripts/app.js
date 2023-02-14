@@ -1,7 +1,6 @@
 // Client facing scripts here
 $(() => {
 
-  let itemQuantities = {};
   let cartObject = {};
   // Creates the food item DOM element
   const createFoodElement = function(foodObj) {
@@ -43,8 +42,6 @@ const loadMenuItems = function() {
 
     // response: {foods:..., prototype:...}
     for(const foodDataItem of response.foods) {
-      // Sets each item to zero in local database
-      itemQuantities[foodDataItem.id] = 0;
       cartObject[foodDataItem.id] = {foodDataItem, quantity: 0};
       const $foodItem = createFoodElement(foodDataItem);
       $foodsList.append($foodItem);
