@@ -15,7 +15,7 @@ const orderQueries = require('../db/queries/orders');
 function pendingTwilio() {
   client.messages
   .create({
-    body: 'Order is processing. We will give you an estimate of the time remaining soon!',
+    body: 'A new order has been made',
     to: process.env.PHONE, // Text this number
     from: `${process.env.TWILIO_PHONE}`, // From a valid Twilio number
   })
@@ -25,7 +25,7 @@ function pendingTwilio() {
 function confirmTwilio(time) {
   client.messages
   .create({
-    body: `Order is has been confirmed. Time remaining is ${time} minutes`,
+    body: `Order has has been confirmed. Time remaining is ${time} minutes`,
     to: process.env.PHONE, // Text this number
     from: `${process.env.TWILIO_PHONE}`, // From a valid Twilio number
   })
@@ -98,15 +98,22 @@ router.post('/', (req, res) => {
 
 router.post('/edit', (req, res) => {
   const time = Number(req.body.selectedTime);
+  const orderId = req.body.orderId;
 
   confirmTwilio(time);
 
-  // orderQueries.updateOrderItem(userId)
-  // .then(orderData => {
+  orderQueries.updateOrderItem(orderId)
+  .then(orderData => {
+    console.log("Updated Order")
+    res.json({orderData})
+  })
+  .catch(err => {
+    console.log("error updating the order item:", err);
+    res
+      .status(500)
+      .json({result: "error"});
+  });
 
-  // });
-
-  res.json({time})
 });
 
 module.exports = router;

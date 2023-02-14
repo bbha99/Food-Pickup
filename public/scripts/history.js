@@ -20,6 +20,7 @@ $(() => {
       $orders.append($($currentOrderDetails));
       let totalCost = 0;
       let orderStatus = "";
+      let orderId = 0;
       for (const data of orderData) {
         if (currentId === data.order_id) {
           totalCost+= data.price / 100 * data.quantity;
@@ -31,6 +32,7 @@ $(() => {
             <p>user_id: ${data.user_id}</p>
             `
           orderStatus = data.order_status;
+          orderId = data.order_id;
         }
       }
       let orderStatusOptions = ``;
@@ -49,7 +51,7 @@ $(() => {
         <button>Ready for Pickup</button>
         `
       }
-      $currentOrder =`<div class="order-item">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost}</p>`+ orderStatusOptions + `</div>`;
+      $currentOrder =$(`<div data-order-id="${orderId}">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost}</p>`+ orderStatusOptions + `</div>`);
       $orders.append($currentOrder);
     }
 
@@ -59,15 +61,20 @@ $(() => {
       timeOption.parent().append($(`
           <button>Ready for Pickup</button>
         `));
+
+      const orderElement = $(this).closest("[data-order-id]");
+      const orderId = orderElement.data("order-id");
       timeOption.remove();
 
+      console.log("orderId", orderId)
       $.ajax({
         method: 'POST',
         url: '/order/edit',
-        data: {selectedTime : selectedTime}
+        data: { selectedTime, orderId }
       })
       .then ((res) => {
-        console.log("returned is: ", res);
+        const orderItemStatus = orderElement.find('.order-status');
+        orderItemStatus.text("Order Status: " + res.orderData.order_status);
       })
 
 

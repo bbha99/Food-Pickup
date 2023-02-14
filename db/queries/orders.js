@@ -49,19 +49,34 @@ const getOrderItems = () => {
   .catch(err => console.error('query error', err.stack));
   };
 
-  const getOrderIds = () => {
-    return db
-    .query(`
-    SELECT DISTINCT order_id
-    FROM orders JOIN food_quantities on order_id = orders.id;
-    `)
-    .then(result => {
-    return result.rows;
-    })
-    .catch(err => console.error('query error', err.stack));
-    };
+const getOrderIds = () => {
+  return db
+  .query(`
+  SELECT DISTINCT order_id
+  FROM orders JOIN food_quantities on order_id = orders.id;
+  `)
+  .then(result => {
+  return result.rows;
+  })
+  .catch(err => console.error('query error', err.stack));
+  };
 
-module.exports = { addOrder, addItemToOrder, getOrderItems, getOrderIds };
+const updateOrderItem = (orderId) => {
+  return db
+  .query(`
+    UPDATE orders
+    SET order_status = 'Not Ready'
+    WHERE id = $1
+    RETURNING *
+  `, [orderId])
+  .then(result => {
+    return result.rows[0];
+    })
+
+}
+
+
+module.exports = { addOrder, addItemToOrder, getOrderItems, getOrderIds, updateOrderItem };
 
 
 // order_status VARCHAR(255) NOT NULL,
