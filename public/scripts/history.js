@@ -1,12 +1,18 @@
 // Client facing scripts here
 $(() => {
-  $.ajax({
-    method: 'GET',
-    url: '/api/users/order'
-  })
-  .then((response) => {
-    console.log("response", response.orders)
-    console.log("response2", response.orderIds[2])
+
+  const getOrders = () => {
+    $.ajax({
+      method: 'GET',
+      url: '/api/users/order'
+    })
+    .then((response) => {
+      renderOrders(response);
+    });
+  };
+  const bodyId = $("body").attr('id');
+
+  const renderOrders = (response) => {
     const orderIds = response.orderIds;
     const orderData = response.orders;
 
@@ -23,7 +29,7 @@ $(() => {
       let orderId = 0;
       for (const data of orderData) {
         if (currentId === data.order_id) {
-          totalCost+= data.price / 100 * data.quantity;
+          totalCost+= Number(data.price) / 100 * Number(data.quantity);
           $currentOrderDetails += `
             <p>Order Id: ${data.order_id}</p>
             <p>Name: ${data.name}</p>
@@ -36,23 +42,33 @@ $(() => {
         }
       }
       let orderStatusOptions = ``;
-      if (orderStatus === 'pending') {
-        orderStatusOptions= `
-        <div class="ready-status">
-          <div>
-            <button class="time-option">20</button>
-            <button class="time-option">40</button>
-            <button class="time-option">60</button>
+      const quantityDeleteButton = $(".quantity-border");
+      // console.log("bodyId", bodyId);
+
+      if (bodyId === "admin") {
+        if (orderStatus === 'pending') {
+          orderStatusOptions= `
+          <div class="ready-status">
+            <div>
+              <button class="time-option">20</button>
+              <button class="time-option">40</button>
+              <button class="time-option">60</button>
+            </div>
           </div>
-        </div>
-        `
-      } else if (orderStatus === 'Not Ready') {
-        orderStatusOptions= `
-        <button>Ready for Pickup</button>
-        `
+          `
+        } else if (orderStatus === 'Not Ready') {
+          orderStatusOptions= `
+          <button>Ready for Pickup</button>
+          `
+        }
+        $currentOrder =$(`<div data-order-id="${orderId}">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost.toFixed(2)}</p>`+ orderStatusOptions + `</div>`);
+        $orders.append($currentOrder);
       }
-      $currentOrder =$(`<div data-order-id="${orderId}">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost}</p>`+ orderStatusOptions + `</div>`);
-      $orders.append($currentOrder);
+
+      if (bodyId === "customer") {
+        $currentOrder =$(`<div data-order-id="${orderId}">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost.toFixed(2)}</p>` + `</div>`);
+        $orders.append($currentOrder);
+      }
     }
 
     $(".time-option").on('click', function () {
@@ -76,12 +92,13 @@ $(() => {
         const orderItemStatus = orderElement.find('.order-status');
         orderItemStatus.text("Order Status: " + res.orderData.order_status);
       })
-
-
-
     });
-  });
+  };
 
-
-
+  getOrders();
+  if (bodyId === "customer") {
+    setInterval(function(){
+      getOrders();
+   }, 5000);
+  }
 });

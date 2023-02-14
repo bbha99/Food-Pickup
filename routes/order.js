@@ -49,6 +49,18 @@ router.get('/', (req, res) => {
 
 });
 
+router.get('/history', (req, res) => {
+  const userId = req.session.user_id;
+  const userRole = req.session.user_role;
+
+  if (userRole === 'customer') {
+    res.render('order_page_user');
+  } else {
+    res.send("error");
+  }
+
+});
+
 router.get('/history/admin', (req, res) => {
   const userId = req.session.user_id;
   const userRole = req.session.user_role;
