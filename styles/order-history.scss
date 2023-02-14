@@ -1,0 +1,9 @@
+.orders {
+  display: flex;
+  justify-content: space-between;
+  .order-item {
+    border-style: solid;
+    margin: 10px;
+  }
+}
+
