@@ -156,8 +156,18 @@ const loadMenuItems = function() {
 
 loadMenuItems()
 
+// Order now event
 $('#order-button').on('click', function (event) {
-  console.log("cartObject", cartObject)
+  console.log("cartObject", cartObject);
+  $.ajax({
+    method: 'POST',
+    url: '/order',
+    data: {cartItems : cartObject}
+  })
+  .then ((res) => {
+    console.log("order Number is: ", res);
+    window.location.href = `/order?orderId=${res["orderId"]}`
+  })
 });
 
 });

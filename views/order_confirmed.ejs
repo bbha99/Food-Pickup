@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>order Home Page</title>
+
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <nav class="nav-container">
+    <span id="nav-logo">UberEatsPickup</span>
+    <ul id="nav-options">
+      <li><a href="/menu">Home</a></li>
+      <li>View Current Orders</li>
+      <li>
+        <form method = "POST" action = "/users/logout">
+          <button style="border-radius: 5px;border-color:#90b3d8">Logout</button>
+        </form>
+      </li>
+    </ul>
+  </nav>
+  <img style="width:100%;" class="homepage-image" src="https://japanhousegoodlettsvilletn.com/wp-content/uploads/2020/04/%E6%97%A5%E9%A4%90-18.jpg" alt="food item" height="350px">
+  <main id="main-container">
+    <p>order confirmed. <%= orderId %></p>
+  </main>
+
+</body>
+
+</html>
