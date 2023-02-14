@@ -37,7 +37,31 @@ const addItemToOrder =  function(cartItem, orderId) {
   });
 };
 
-module.exports = { addOrder, addItemToOrder };
+const getOrderItems = () => {
+  return db
+  .query(`
+  SELECT order_id, name, order_status, price, quantity, user_id
+  FROM orders JOIN food_quantities on order_id = orders.id JOIN foods on food_id = foods.id;
+  `)
+  .then(result => {
+  return result.rows;
+  })
+  .catch(err => console.error('query error', err.stack));
+  };
+
+  const getOrderIds = () => {
+    return db
+    .query(`
+    SELECT DISTINCT order_id
+    FROM orders JOIN food_quantities on order_id = orders.id;
+    `)
+    .then(result => {
+    return result.rows;
+    })
+    .catch(err => console.error('query error', err.stack));
+    };
+
+module.exports = { addOrder, addItemToOrder, getOrderItems, getOrderIds };
 
 
 // order_status VARCHAR(255) NOT NULL,

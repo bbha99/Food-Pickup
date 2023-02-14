@@ -6,4 +6,5 @@ CREATE TABLE foods (
   image_url VARCHAR(255) NOT NULL,
   price INTEGER NOT NULL DEFAULT 0,
   owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+  -- active Boolean NOT NULL
 );
