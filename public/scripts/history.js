@@ -37,30 +37,29 @@ $(() => {
       if (orderStatus === 'pending') {
         orderStatusOptions= `
         <div class="ready-status">
-          <button class="time-option">20</button>
-          <button class="time-option">40</button>
-          <button class="time-option">60</button>
+          <div>
+            <button class="time-option">20</button>
+            <button class="time-option">40</button>
+            <button class="time-option">60</button>
+          </div>
         </div>
         `
       } else if (orderStatus === 'Not Ready') {
         orderStatusOptions= `
-        <div class="ready-status">
-          <button>Ready for Pickup</button>
-        </div>
+        <button>Ready for Pickup</button>
         `
       }
       $currentOrder =`<div class="order-item">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost}</p>`+ orderStatusOptions + `</div>`;
       $orders.append($currentOrder);
     }
 
-    let $readyStatus = $(".ready-status");
-
     $(".time-option").on('click', function () {
       const selectedTime = $(this).text();
-      $(".time-option").remove();
-      $readyStatus.append($(`
+      const timeOption = $(this).closest("div");
+      timeOption.parent().append($(`
           <button>Ready for Pickup</button>
         `));
+      timeOption.remove();
 
       $.ajax({
         method: 'POST',
