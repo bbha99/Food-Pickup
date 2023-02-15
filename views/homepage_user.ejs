@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,600;0,700;1,200&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- App CSS -->
   <link rel="stylesheet" href="/styles/main.css" />
@@ -58,9 +58,22 @@
         <section class="menu-items"></section>
       </section>
       <section class="menu-cart">
-        <h2>Your Cart</h2>
-        <div id="cartItem"></div>
-        <button id="order-button">Order Now</button>
+        <div class="customer-cart">
+          <div class="cart-header">
+            <h2 class="cart-title">Your Cart</h2>
+            <div class="location">
+              <i class="fa-solid fa-location-dot" id="location"></i>
+              <span id="address">Pickup at <strong>1920 W 4th Ave, Vancouver</strong></span>
+            </div>
+            <div class="pickup-time">
+              <i class="fa-solid fa-clock" id="clock"></i>
+              <span id="address">Order will be ready in about 15 - 20 minutes.</span>
+            </div>
+          </div>
+          <div id="cartItem"></div>
+          <br>
+          <button id="order-button">Order Now</button>
+        </div>
       </section>
     </section>
   </main>
