@@ -40,8 +40,8 @@ const addItemToOrder =  function(cartItem, orderId) {
 const getOrderItems = () => {
   return db
   .query(`
-  SELECT order_id, name, order_status, price, quantity, user_id
-  FROM orders JOIN food_quantities on order_id = orders.id JOIN foods on food_id = foods.id;
+  SELECT order_id, foods.name as foodname, users.name as username, order_status, price, quantity
+  FROM orders JOIN food_quantities on order_id = orders.id JOIN foods on food_id = foods.id JOIN users on orders.user_id = users.id;
   `)
   .then(result => {
   return result.rows;

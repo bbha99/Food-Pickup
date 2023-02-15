@@ -27,18 +27,18 @@ $(() => {
       let totalCost = 0;
       let orderStatus = "";
       let orderId = 0;
+      let username = "";
       for (const data of orderData) {
         if (currentId === data.order_id) {
           totalCost+= Number(data.price) / 100 * Number(data.quantity);
           $currentOrderDetails += `
-            <p>Order Id: ${data.order_id}</p>
-            <p>Name: ${data.name}</p>
+            <p>Item: ${data.foodname}</p>
             <p>Price: $${data.price / 100 * data.quantity}</p>
             <p>Quantity: ${data.quantity}</p>
-            <p>user_id: ${data.user_id}</p>
             `
           orderStatus = data.order_status;
           orderId = data.order_id;
+          username = data.username;
         }
       }
       let orderStatusOptions = ``;
@@ -61,7 +61,7 @@ $(() => {
           <button>Ready for Pickup</button>
           `
         }
-        $currentOrder =$(`<div data-order-id="${orderId}">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost.toFixed(2)}</p>`+ orderStatusOptions + `</div>`);
+        $currentOrder =$(`<div data-order-id="${orderId}">` + `<p>Order id: ${orderId}</p> <p>Customer: ${username}</p>` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost.toFixed(2)}</p>`+ orderStatusOptions + `</div>`);
         $orders.append($currentOrder);
       }
 
