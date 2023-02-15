@@ -6,11 +6,13 @@ $(() => {
   // Creates the food item DOM element
   const createFoodElement = function(foodObj) {
     const $food = $(`
-    <div id="${foodObj.id}" class="item-border">
-      <h2>${foodObj.name}</h2>
-      <p>${foodObj.description}</p>
-      <p class="price-total">$${foodObj.price/100}</p>
+    <div id="${foodObj.id}" class="food-item">
       <img src="${foodObj.image_url}" alt="food item" width="200px" height="200px">
+      <div class="food-details">
+        <p id="food-name">${foodObj.name}</p>
+        <p id="food-description">${foodObj.description}</p>
+        <p id="price-total">$${foodObj.price/100}</p>
+      </div>
       <div class="quantity-border">
         <button class="subtract">-</button>
         <p class="quantity">0</p>
@@ -24,11 +26,9 @@ $(() => {
     const item = cartObj.foodDataItem;
     const quantity = cartObj.quantity;
     const $cartItem = $(`
-    <div id="${id}" class="item-border">
-      <h2>${item.name}</h2>
-      <p class="itemQuantity">${quantity}</p>
-      <p>${item.description}</p>
-      <p class="price-total">$</p>
+    <div id="${id}" class="food-item">
+      <div>${item.name}</div>
+      <div>&nbsp x &nbsp<span class="itemQuantity">${quantity}</span>&nbsp.........&nbsp<span class="price-total">$</span></div>
     </div>`);
 
     return $cartItem;
