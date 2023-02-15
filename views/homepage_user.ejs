@@ -8,8 +8,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0" >
 
+  <!-- External CSS -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,600;0,700;1,200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- App CSS -->
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
   <link rel="stylesheet" href="/styles/nav.css" />
@@ -20,27 +27,53 @@
 
 <body id="customer">
   <nav class="nav-container">
-    <span id="nav-logo">UberEatsPickup</span>
+    <span id="nav-logo">Sushi Emporium</span>
     <ul id="nav-options">
       <li><a href="/menu">Home</a></li>
       <li><a href="/order/history">View Orders</a></li>
       <li>
         <form method = "POST" action = "/users/logout">
-          <button style="border-radius: 5px;border-color:#90b3d8">Logout</button>
+          <button>Logout</button>
         </form>
       </li>
     </ul>
   </nav>
-  <img style="width:100%;" class="homepage-image" src="https://japanhousegoodlettsvilletn.com/wp-content/uploads/2020/04/%E6%97%A5%E9%A4%90-18.jpg" alt="food item" height="350px">
-  <main id="main-container">
-    <section class="menu-items"></section>
-
+  <main id="main-container" class="menu">
+    <section class="menu-food">
+      <div class="menu-header">
+        <h2 id="name"><strong>Sushi Emporium</strong></h2>
+        <div>Open 11:00 AM - 10:00 PM</div>
+        <div>Address: 1920 W 4th Ave, Vancouver, B.C.</div>
+        <div>Phone: 604-779-3709</div>
+        <div>Pick-Up Only</div>
+        <br>
+        <div class="social-media">
+          <i class="fa-brands fa-facebook"></i>
+          <i class="fa-brands fa-instagram icon-4x"></i>
+          <i class="fa-brands fa-square-twitter icon-4x"></i>
+        </div>
+      </div>
+      <section class="menu-items"></section>
+    </section>
     <section class="menu-cart">
-      <h2>Your Cart</h2>
-      <div id="cartItem"></div>
-      <div id="order-btn-display">
-        <button id="order-button">Order Now</button>
-        <p id="orderError"></p>
+      <div class="customer-cart">
+        <div class="cart-header">
+          <h2 class="cart-title">Your Cart</h2>
+          <div class="location">
+            <i class="fa-solid fa-location-dot" id="location"></i>
+            <span id="address">Pickup at <strong>1920 W 4th Ave, Vancouver</strong></span>
+          </div>
+          <div class="pickup-time">
+            <i class="fa-solid fa-clock" id="clock"></i>
+            <span id="address">Order will be ready in about 15 - 20 minutes.</span>
+          </div>
+        </div>
+        <div id="cartItem"></div>
+        <br>
+        <div id="order-btn-display">
+          <button id="order-button">Order Now</button>
+          <p id="orderError"></p>
+        </div>
       </div>
     </section>
   </main>

@@ -6,10 +6,12 @@ $(() => {
   const createFoodElement = function(foodObj) {
     const $food = $(`
     <div id="${foodObj.id}" class="item-border">
-      <h2>${foodObj.name}</h2>
-      <p>${foodObj.description}</p>
-      <p class="price-total">$${foodObj.price/100}</p>
       <img src="${foodObj.image_url}" alt="food item" width="200px" height="200px">
+      <div class="food-details">
+        <p id="food-name">${foodObj.name}</p>
+        <p id="food-description">${foodObj.description}</p>
+        <p id="price-total"><strong>$${foodObj.price/100}</strong></p>
+      </div>
       <div class="quantity-border">
       </div>
     </div>`);
@@ -20,10 +22,12 @@ $(() => {
     const item = cartObj.foodDataItem;
     const quantity = cartObj.quantity;
     const $cartItem = $(`
-    <div id="${id}" class="item-border">
-      <h2>${item.name}</h2>
+    <div id="${id}" class="cart-item">
       <p class="itemQuantity">${quantity}</p>
-      <p>${item.description}</p>
+      <div class="item-details">
+        <div class="item-name"><strong>${item.name}</strong></div>
+        <div class="item-description">${item.description}</div>
+      </div>
       <p class="price-total">$</p>
     </div>`);
 
