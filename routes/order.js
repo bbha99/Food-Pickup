@@ -32,22 +32,22 @@ function confirmTwilio(time) {
   .then((message) => console.log(message.sid));
 }
 
-// Displays the order number for the user
-router.get('/', (req, res) => {
-  const userId = req.session.user_id;
-  const userRole = req.session.user_role;
+// // Displays the order number for the user
+// router.get('/', (req, res) => {
+//   const userId = req.session.user_id;
+//   const userRole = req.session.user_role;
 
-  if (userRole === 'customer') {
-    const orderId = req.query.orderId;
-    console.log("this is orderid:", orderId)
-    res.render("order_confirmed", {orderId});
-  } else {
-    res.redirect('../');
-  }
+//   if (userRole === 'customer') {
+//     const orderId = req.query.orderId;
+//     console.log("this is orderid:", orderId)
+//     res.render("order_confirmed", {orderId});
+//   } else {
+//     res.redirect('../');
+//   }
 
 
 
-});
+// });
 
 router.get('/history', (req, res) => {
   const userId = req.session.user_id;

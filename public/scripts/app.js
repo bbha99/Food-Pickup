@@ -155,16 +155,38 @@ loadMenuItems()
 
 // Order now event
 $('#order-button').on('click', function (event) {
-  console.log("cartObject", cartObject);
-  $.ajax({
-    method: 'POST',
-    url: '/order',
-    data: {cartItems : cartObject}
-  })
-  .then ((res) => {
-    console.log("order Number is: ", res);
-    window.location.href = `/order?orderId=${res["orderId"]}`
-  })
+
+  console.log("this is the cartObject", cartObject);
+  let flag = false;
+  for (const cartItem in cartObject) {
+    if (cartObject[cartItem].quantity > 0) {
+      flag = true;
+      break;
+    }
+  }
+  if (flag) {
+    // $("#error").slideUp();
+    console.log("cartObject", cartObject);
+    $.ajax({
+      method: 'POST',
+      url: '/order',
+      data: {cartItems : cartObject}
+    })
+    .then ((res) => {
+      console.log("order Number is: ", res);
+      $('#order-btn-display').empty();
+      $('.quantity-border').remove();
+      $('#order-btn-display').append($(`<p id='order-button'>Your order has been placed!<p>`));
+
+      // Redirects to the orderid page
+      // window.location.href = `/order?orderId=${res["orderId"]}`
+    })
+  } else {
+    const emptyCartOrder = "Please enter items for the order";
+    $("#orderError").slideUp();
+    $("#orderError").text(emptyCartOrder);
+    $("#orderError").slideDown();
+  }
 });
 
 });
