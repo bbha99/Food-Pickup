@@ -11,7 +11,7 @@ $(() => {
       <div class="food-details">
         <p id="food-name">${foodObj.name}</p>
         <p id="food-description">${foodObj.description}</p>
-        <p id="price-total">$${foodObj.price/100}</p>
+        <p id="price-total"><strong>$${foodObj.price/100}</strong></p>
       </div>
       <div class="quantity-border">
         <button class="subtract">-</button>
@@ -26,9 +26,13 @@ $(() => {
     const item = cartObj.foodDataItem;
     const quantity = cartObj.quantity;
     const $cartItem = $(`
-    <div id="${id}" class="food-item">
-      <div>${item.name}</div>
-      <div>&nbsp x &nbsp<span class="itemQuantity">${quantity}</span>&nbsp.........&nbsp<span class="price-total">$</span></div>
+    <div id="${id}" class="cart-item">
+      <span class="itemQuantity">${quantity}</span>
+      <div class="item-details">
+        <div class="item-name"><strong>${item.name}</strong></div>
+        <div class="item-description">${item.description}</div>
+      </div>
+      <span class="price-total">$</span>
     </div>`);
 
     return $cartItem;
