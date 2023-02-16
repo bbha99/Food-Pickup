@@ -18,16 +18,19 @@ $(() => {
 
     $orders = $(".orders");
     $orders.empty();
+    console.log("orderIds", orderIds)
+    console.log("orderData", orderData)
 
     // Display the orders to the admin
-    for (let i = orderIds.length - 1; i >= 0; i--) {
-      const currentId = orderIds[i].order_id;
+    for (let i = 0; i < orderIds.length; i++) {
+      const currentId = orderIds[i].id;
       let $currentOrderDetails =  ``;
       $orders.append($($currentOrderDetails));
       let totalCost = 0;
       let orderStatus = "";
       let orderId = 0;
       let username = "";
+      let created_at = "";
       for (const data of orderData) {
         if (currentId === data.order_id) {
           totalCost+= Number(data.price) / 100 * Number(data.quantity);
@@ -39,6 +42,7 @@ $(() => {
           orderStatus = data.order_status;
           orderId = data.order_id;
           username = data.username;
+          created_at = data.created_at;
         }
       }
       let orderStatusOptions = ``;
@@ -69,12 +73,12 @@ $(() => {
           <p>Pickup has been confirmed.</p>
           `
         }
-        $currentOrder =$(`<div data-order-id="${orderId}">` + `<p>Order id: ${orderId}</p> <p>Customer: ${username}</p>` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost.toFixed(2)}</p>`+ orderStatusOptions + `</div>`);
+        $currentOrder =$(`<div data-order-id="${orderId}">` + `<p>Order id: ${orderId}</p> <p>Customer: ${username}</p>` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Created at: ${created_at} </p> <p>Total Cost: $${totalCost.toFixed(2)}</p>`+ orderStatusOptions + `</div>`);
         $orders.append($currentOrder);
       }
 
       if (bodyId === "customer") {
-        $currentOrder =$(`<div data-order-id="${orderId}">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost.toFixed(2)}</p>` + `</div>`);
+        $currentOrder =$(`<div data-order-id="${orderId}">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Created at: ${created_at} </p> <p>Total Cost: $${totalCost.toFixed(2)}</p>` + `</div>`);
         $orders.append($currentOrder);
       }
     }

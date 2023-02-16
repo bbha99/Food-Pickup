@@ -30,7 +30,7 @@ router.get('/admin', (req, res) => {
 })
 
 
-router.post('/admin/:id/delete', (req, res) => {
+router.post('/admin/:id/edit', (req, res) => {
   const userId = req.session.user_id;
   const userRole = req.session.user_role;
 
@@ -38,7 +38,7 @@ router.post('/admin/:id/delete', (req, res) => {
     const deletedId = req.params.id;
 
     console.log("TEST deletedId, userID, userRole ", deletedId, userId, userRole);
-    foodQueries.deleteItem(deletedId)
+    foodQueries.toggleItem(deletedId)
     .then(item => {
       console.log("this is the item deleted: ", item)
       res.json({ item });

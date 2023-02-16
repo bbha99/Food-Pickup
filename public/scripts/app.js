@@ -140,11 +140,11 @@ const loadMenuItems = function() {
       const itemId = item.attr('id');
       $.ajax({
         method: 'POST',
-        url: `/menu/admin/${itemId}/delete`
+        url: `/menu/admin/${itemId}/edit`
       })
       .then ((res) => {
-        if(res.item.result==="deleted"){
-          alert("Record deleted!");
+        if(res.item.result==="toggled"){
+          alert("Record toggled!");
         } else {
 
         }

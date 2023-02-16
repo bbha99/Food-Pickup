@@ -37,6 +37,7 @@ router.get('/order', (req, res) => {
   .then(orders => {
     orderQueries.getOrderIds()
     .then(orderIds => {
+      console.log("order ids are:", orderIds);
       res.json({orders, orderIds});
     });
   });

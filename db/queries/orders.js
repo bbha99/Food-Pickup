@@ -40,7 +40,7 @@ const addItemToOrder =  function(cartItem, orderId) {
 const getOrderItems = () => {
   return db
   .query(`
-  SELECT order_id, foods.name as foodname, users.name as username, order_status, price, quantity
+  SELECT order_id, foods.name as foodname, users.name as username, order_status, price, quantity, created_at
   FROM orders JOIN food_quantities on order_id = orders.id JOIN foods on food_id = foods.id JOIN users on orders.user_id = users.id;
   `)
   .then(result => {
@@ -52,10 +52,12 @@ const getOrderItems = () => {
 const getOrderIds = () => {
   return db
   .query(`
-  SELECT DISTINCT order_id
-  FROM orders JOIN food_quantities on order_id = orders.id;
+  SELECT id
+  FROM orders
+  ORDER BY created_at DESC;
   `)
   .then(result => {
+    console.log("inside query order ids are:", result.rows)
   return result.rows;
   })
   .catch(err => console.error('query error', err.stack));
