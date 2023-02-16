@@ -58,10 +58,14 @@
 
     <section class="menu-cart">
         <form action="/tweets/" method="post" class="new-tweet-form">
-          <label for="name"><strong>name:</strong></label>
+          <div class="cart-header">
+            <h2 class="cart-title">Add Menu Item</h2>
+          </div>
+          <br>
+          <label for="name"><strong>Item Name:</strong></label>
           <input type="text" name="name" id="name"></input>
 
-          <label for="description"><strong>description:</strong></label>
+          <label for="description"><strong>Description:</strong></label>
           <input type="text" name="description" id="description"></input>
 
           <label for="image"><strong>Image Url:</strong></label>
@@ -69,6 +73,8 @@
 
           <label for="price"><strong>Price:</strong></label>
           <input type="number" name="price" id="price" step="any"></input>
+
+          <br>
 
           <button type="submit" id="add-food">Add Item</button>
           <p id="create-error"></p>
