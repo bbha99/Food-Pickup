@@ -61,14 +61,19 @@ const getOrderIds = () => {
   .catch(err => console.error('query error', err.stack));
   };
 
-const updateOrderItem = (orderId) => {
+const updateOrderItem = (orderId, time) => {
+  let status = 'Not Ready';
+  if (!time) {
+    status = 'Ready';
+  }
+
   return db
   .query(`
     UPDATE orders
-    SET order_status = 'Not Ready'
+    SET order_status = $2
     WHERE id = $1
     RETURNING *
-  `, [orderId])
+  `, [orderId, status])
   .then(result => {
     return result.rows[0];
     })

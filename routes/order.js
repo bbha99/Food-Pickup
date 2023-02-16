@@ -32,6 +32,16 @@ function confirmTwilio(time) {
   .then((message) => console.log(message.sid));
 }
 
+function PickupReadyTwilio() {
+  client.messages
+  .create({
+    body: `Your order is ready for pickup!`,
+    to: process.env.PHONE, // Text this number
+    from: `${process.env.TWILIO_PHONE}`, // From a valid Twilio number
+  })
+  .then((message) => console.log(message.sid));
+}
+
 // // Displays the order number for the user
 // router.get('/', (req, res) => {
 //   const userId = req.session.user_id;
@@ -112,9 +122,14 @@ router.post('/edit', (req, res) => {
   const time = Number(req.body.selectedTime);
   const orderId = req.body.orderId;
 
-  confirmTwilio(time);
+  if (time) {
+    confirmTwilio(time);
+  } else {
+    PickupReadyTwilio();
+  }
+  console.log("TIME: ", time);
 
-  orderQueries.updateOrderItem(orderId)
+  orderQueries.updateOrderItem(orderId, time)
   .then(orderData => {
     console.log("Updated Order")
     res.json({orderData})

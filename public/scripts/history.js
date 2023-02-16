@@ -58,7 +58,15 @@ $(() => {
           `
         } else if (orderStatus === 'Not Ready') {
           orderStatusOptions= `
-          <button>Ready for Pickup</button>
+          <div class="ready-status">
+            <div>
+              <button class="time-option">Ready for Pickup</button>
+            </div>
+          </div>
+          `
+        } else if (orderStatus === 'Ready') {
+          orderStatusOptions= `
+          <p>Pickup has been confirmed.</p>
           `
         }
         $currentOrder =$(`<div data-order-id="${orderId}">` + `<p>Order id: ${orderId}</p> <p>Customer: ${username}</p>` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Total Cost: $${totalCost.toFixed(2)}</p>`+ orderStatusOptions + `</div>`);
@@ -73,14 +81,9 @@ $(() => {
 
     $(".time-option").on('click', function () {
       const selectedTime = $(this).text();
-      const timeOption = $(this).closest("div");
-      timeOption.parent().append($(`
-          <button>Ready for Pickup</button>
-        `));
 
       const orderElement = $(this).closest("[data-order-id]");
       const orderId = orderElement.data("order-id");
-      timeOption.remove();
 
       console.log("orderId", orderId)
       $.ajax({
@@ -89,8 +92,29 @@ $(() => {
         data: { selectedTime, orderId }
       })
       .then ((res) => {
-        const orderItemStatus = orderElement.find('.order-status');
-        orderItemStatus.text("Order Status: " + res.orderData.order_status);
+
+        const timeOption = $(this).closest(".ready-status");
+        $(this).parent().find(".time-option").hide()
+
+        console.log("res", res)
+        console.log("res.orderData", res.orderData);
+
+        if (res.orderData.order_status === 'Not Ready') {
+          $(this).show()
+          $(this).text("Ready for Pickup");
+
+          const orderItemStatus = orderElement.find('.order-status');
+          orderItemStatus.text("Order Status: " + res.orderData.order_status);
+        } else {
+          timeOption.append($(`
+          <p class="pickup-option">Pickup has been confirmed.</p>
+          `));
+          const orderItemStatus = orderElement.find('.order-status');
+          orderItemStatus.text("Order Status: " + res.orderData.order_status);
+        }
+
+
+
       })
     });
   };
