@@ -23,12 +23,12 @@ $(() => {
     const quantity = cartObj.quantity;
     const $cartItem = $(`
     <div id="${id}" class="cart-item">
-      <p class="itemQuantity">${quantity}</p>
+      <span class="itemQuantity">${quantity}</span>
       <div class="item-details">
         <div class="item-name"><strong>${item.name}</strong></div>
         <div class="item-description">${item.description}</div>
       </div>
-      <p class="price-total">$</p>
+      <span class="price-total">$</span>
     </div>`);
 
     return $cartItem;
