@@ -109,7 +109,7 @@ const loadMenuItems = function() {
 
         const $itemPriceTotal = $cartList.find(`#${foodId}`).find(".price-total");
         const totalPrice = cartObject[foodId].foodDataItem.price;
-        $itemPriceTotal.text("Total Price: $" + (totalPrice / 100).toFixed(2))
+        $itemPriceTotal.text("$" + (totalPrice / 100).toFixed(2))
       } else {
         cartObject[foodId].quantity++;
         const $itemQuantity = $cartList.find(`#${foodId}`).find(".itemQuantity");
@@ -118,7 +118,7 @@ const loadMenuItems = function() {
         $foodQuantity.text(cartObject[foodId].quantity);
         $itemQuantity.text(parseInt($itemQuantity.text()) + 1);
         const totalPrice = cartObject[foodId].foodDataItem.price;
-        $itemPriceTotal.text("Total Price: $" + ((totalPrice / 100) * Number($itemQuantity.text())).toFixed(2))
+        $itemPriceTotal.text("$" + ((totalPrice / 100) * Number($itemQuantity.text())).toFixed(2))
       }
     });
 
@@ -140,7 +140,7 @@ const loadMenuItems = function() {
         // Decrement price
         const $itemPriceTotal = $cartList.find(`#${foodId}`).find(".price-total");
         const totalPrice = response.foods[foodId - 1].price;
-        $itemPriceTotal.text("Total Price: $" + ((totalPrice / 100) * parseInt($itemQuantity.text())).toFixed(2))
+        $itemPriceTotal.text("$" + ((totalPrice / 100) * parseInt($itemQuantity.text())).toFixed(2))
 
         // Removes DOM element from cart if number is 0
         if (cartObject[foodId].quantity === 0) {

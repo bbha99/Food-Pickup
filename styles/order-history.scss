@@ -6,14 +6,43 @@
 
   .order-details {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
     border: 1px solid grey;
     border-radius: 15px 15px 15px 15px;
+    padding: 2.5%;
     margin: 2.5%;
+    font-family: 'Source Sans Pro', sans-serif;
   }
 
-  .food-item {
-    border-bottom: 1px solid grey;
+  .order-header{
+    border-right: 1px solid grey;
+    padding-right: 1em;
+  }
+
+  .order-items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+  .order-status {
+    padding-left: 1em;
+    border-left: 1px solid grey;
+  }
+
+  .status-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    button {
+      background-color: black;
+      color: white;
+      font-family: "Francois One", sans-serif;
+      border: none;
+    }
   }
 }
 

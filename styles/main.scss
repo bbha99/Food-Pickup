@@ -1,6 +1,7 @@
 #main-container {
   width: 80vw;
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
   position: absolute;
   top: 200px;
@@ -9,7 +10,6 @@
   margin: auto;
   margin-top: 20px;
   font-family: 'Source Sans Pro', sans-serif;
-  flex-direction: row;
   background-color: white;
   border-radius: 30px 30px 30px 30px;
   border-top-right-radius: 30px 30px;
