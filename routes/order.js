@@ -42,24 +42,7 @@ function PickupReadyTwilio() {
   .then((message) => console.log(message.sid));
 }
 
-// // Displays the order number for the user
-// router.get('/', (req, res) => {
-//   const userId = req.session.user_id;
-//   const userRole = req.session.user_role;
-
-//   if (userRole === 'customer') {
-//     const orderId = req.query.orderId;
-//     console.log("this is orderid:", orderId)
-//     res.render("order_confirmed", {orderId});
-//   } else {
-//     res.redirect('../');
-//   }
-
-
-
-// });
-
-router.get('/history', (req, res) => {
+router.get('/', (req, res) => {
   const userId = req.session.user_id;
   const userRole = req.session.user_role;
 
@@ -71,7 +54,7 @@ router.get('/history', (req, res) => {
 
 });
 
-router.get('/history/admin', (req, res) => {
+router.get('/admin', (req, res) => {
   const userId = req.session.user_id;
   const userRole = req.session.user_role;
 

@@ -54,7 +54,7 @@ const loadMenuItems = function() {
     // Adds minus, plus button to each item on user homepage
     const bodyId = $("body").attr('id');
     const quantityDeleteButton = $(".quantity-border");
-    // console.log("bodyId", bodyId);
+
     if (bodyId === "customer") {
       const quantityButton = $(`
       <button class="subtract">-</button>
@@ -69,9 +69,6 @@ const loadMenuItems = function() {
       const deleteButton = $(`<button class="deleteItem">Delete</button>`);
       quantityDeleteButton.append(deleteButton);
     }
-
-    // console.log("cartObject", cartObject[1].foodDataItem)
-    // console.log("cartObject", cartObject[1].description)
 
     // Increments the displayed quantity and cart item quantity
     $('.add').on('click', function () {
@@ -159,8 +156,6 @@ const loadMenuItems = function() {
 
   // Order now event
   $('#order-button').on('click', function (event) {
-
-    console.log("this is the cartObject", cartObject);
     let flag = false;
     for (const cartItem in cartObject) {
       if (cartObject[cartItem].quantity > 0) {
@@ -169,7 +164,6 @@ const loadMenuItems = function() {
       }
     }
     if (flag) {
-      // $("#error").slideUp();
       console.log("cartObject", cartObject);
       $.ajax({
         method: 'POST',
@@ -177,7 +171,7 @@ const loadMenuItems = function() {
         data: {cartItems : cartObject}
       })
       .then ((res) => {
-        console.log("order Number is: ", res);
+
         $('#order-btn-display').empty();
         $('.quantity-border').remove();
         $('#order-btn-display').append($(`<p id='order-button'>Your order has been placed!<p>`));
@@ -197,19 +191,18 @@ const loadMenuItems = function() {
     event.preventDefault();
 
     const queryString = $(this).serialize();
-    // const inputText = $(this).children("#name").val();
+    const inputText = $(this).children("#image").val();
     console.log("queryString", queryString);
-    // console.log("inputText", inputText)
+    console.log("inputText", inputText)
+
+    inputText.onerror = function() {
+      alert('Invalid image');
+    }
+
 
     $.ajax('/menu/admin/add', { method: 'POST' , data:queryString})
-    .then(function () {
+    .then( () => {
       loadMenuItems()
-
-      // $.ajax('/tweets/', { method: 'GET' })
-      // .then(function (res) {
-      //   const $tweet = createTweetElement(res[res.length-1]);
-      //   $('#tweets-container').prepend($tweet);
-      // });
     });
   });
 

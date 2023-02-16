@@ -7,8 +7,7 @@ const foodQueries = require('../db/queries/foods');
 router.get('/', (req, res) => {
   const userId = req.session.user_id;
   const userRole = req.session.user_role;
-  // console.log("UserID", userId);
-  // console.log("UserRole", userRole);
+
   if (userRole === 'admin') {
     res.redirect('../menu/admin')
   } else if (userRole === 'customer') {
@@ -48,7 +47,6 @@ router.post('/admin/:id/edit', (req, res) => {
       res
         .status(500)
         .json({result: "error"});
-        // .json({ error: err.message });
     });
   } else {
     return res.send("Must be logged in to delete");
