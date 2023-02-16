@@ -1,5 +1,6 @@
 const db = require('../connection');
 
+// Returns the foods data
 const getFoodItems = () => {
   return db
     .query(`
@@ -13,6 +14,7 @@ const getFoodItems = () => {
     .catch(err => console.error('query error', err.stack));
 };
 
+// Inserts a new food item to the food table
 const addFoodItem = (food) => {
   let values = [food.name, food.description, food.imageUrl, Math.round(food.price * 100), food.userId];
 
@@ -31,6 +33,7 @@ const addFoodItem = (food) => {
     });
 };
 
+// Returns the food item for an id
 const getToggleValue = (id) => {
   return db.query(`SELECT * FROM foods WHERE id = $1`, [id])
     .then(toggleValue => {
@@ -38,6 +41,7 @@ const getToggleValue = (id) => {
     });
 };
 
+// Updates the toggle column in the foods table
 const toggleItem = (id, status) => {
   return db.query(`UPDATE foods SET toggle = $1 WHERE id = $2 RETURNING *;`, [status, id])
     .then(updatedData => {
