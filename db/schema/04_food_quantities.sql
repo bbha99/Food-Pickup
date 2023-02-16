@@ -5,7 +5,3 @@ CREATE TABLE food_quantities (
   food_id INTEGER REFERENCES foods(id) ON DELETE CASCADE,
   order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE
 );
-
-
--- (2, "banana", 2)
--- (1, "grapes", 2)
