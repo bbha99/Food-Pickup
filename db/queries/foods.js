@@ -4,7 +4,8 @@ const getFoodItems = () => {
   return db
   .query(`
   SELECT *
-  FROM foods;
+  FROM foods
+  ORDER BY id DESC;
   `)
   .then(result => {
   return result.rows;
@@ -29,7 +30,9 @@ const getFoodByOwnerId = (id) => {
 };
 
 const addFoodItem = (food) => {
-  let values = [food.name, food.description, food.image_url, food.price, food.owner_id];
+  console.log("food", food);
+  console.log("food.price", food.price)
+  let values = [food.name, food.description, food.imageUrl, Math.round(food.price * 100), food.userId];
 
   return db
   .query(`
@@ -38,11 +41,11 @@ const addFoodItem = (food) => {
   RETURNING *;
   `, values)
   .then((result) => {
-    console.log(result.rows);
+    console.log("result.rows", result.rows);
     return result.rows[0];
   })
   .catch((err) => {
-    console.error(null);
+    console.log("error", err);
     return null;
   });
 };

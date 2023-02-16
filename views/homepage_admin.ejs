@@ -16,6 +16,7 @@
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
+  <script defer src="/scripts/addForm.js"></script>
 </head>
 
 <body id="admin">
@@ -32,8 +33,42 @@
     </ul>
   </nav>
   <img style="width:100%;" class="homepage-image" src="https://japanhousegoodlettsvilletn.com/wp-content/uploads/2020/04/%E6%97%A5%E9%A4%90-18.jpg" alt="food item" height="350px">
-  <main id="main-container">
-    <section class="menu-items"></section>
+  <main id="main-container" class="menu">
+    <section class="menu-food">
+      <div class="menu-header">
+        <h2 id="name"><strong>Sushi Emporium</strong></h2>
+        <div>Open 11:00 AM - 10:00 PM</div>
+        <div>Address: 1920 W 4th Ave, Vancouver, B.C.</div>
+        <div>Phone: 604-779-3709</div>
+        <div>Pick-Up Only</div>
+        <br>
+        <div class="social-media">
+          <i class="fa-brands fa-facebook"></i>
+          <i class="fa-brands fa-instagram icon-4x"></i>
+          <i class="fa-brands fa-square-twitter icon-4x"></i>
+        </div>
+      </div>
+      <section class="menu-items"></section>
+    </section>
+
+    <section class="menu-cart">
+        <form action="/tweets/" method="post" class="new-tweet-form">
+          <label for="name"><strong>name:</strong></label>
+          <input type="text" name="name" id="name"></input>
+
+          <label for="description"><strong>description:</strong></label>
+          <input type="text" name="description" id="description"></input>
+
+          <label for="image"><strong>Image Url:</strong></label>
+          <input type="url" name="image" id="image"></input>
+
+          <label for="price"><strong>Price:</strong></label>
+          <input type="number" name="price" id="price" step="any"></input>
+
+          <button type="submit" id="add-food">Add Item</button>
+          <p id="create-error"></p>
+        </form>
+    </section>
   </main>
 
 </body>

@@ -155,42 +155,62 @@ const loadMenuItems = function() {
   });
 }
 
-loadMenuItems()
+  loadMenuItems()
 
-// Order now event
-$('#order-button').on('click', function (event) {
+  // Order now event
+  $('#order-button').on('click', function (event) {
 
-  console.log("this is the cartObject", cartObject);
-  let flag = false;
-  for (const cartItem in cartObject) {
-    if (cartObject[cartItem].quantity > 0) {
-      flag = true;
-      break;
+    console.log("this is the cartObject", cartObject);
+    let flag = false;
+    for (const cartItem in cartObject) {
+      if (cartObject[cartItem].quantity > 0) {
+        flag = true;
+        break;
+      }
     }
-  }
-  if (flag) {
-    // $("#error").slideUp();
-    console.log("cartObject", cartObject);
-    $.ajax({
-      method: 'POST',
-      url: '/order',
-      data: {cartItems : cartObject}
-    })
-    .then ((res) => {
-      console.log("order Number is: ", res);
-      $('#order-btn-display').empty();
-      $('.quantity-border').remove();
-      $('#order-btn-display').append($(`<p id='order-button'>Your order has been placed!<p>`));
+    if (flag) {
+      // $("#error").slideUp();
+      console.log("cartObject", cartObject);
+      $.ajax({
+        method: 'POST',
+        url: '/order',
+        data: {cartItems : cartObject}
+      })
+      .then ((res) => {
+        console.log("order Number is: ", res);
+        $('#order-btn-display').empty();
+        $('.quantity-border').remove();
+        $('#order-btn-display').append($(`<p id='order-button'>Your order has been placed!<p>`));
 
-      // Redirects to the orderid page
-      // window.location.href = `/order?orderId=${res["orderId"]}`
-    })
-  } else {
-    const emptyCartOrder = "Please enter items for the order";
-    $("#orderError").slideUp();
-    $("#orderError").text(emptyCartOrder);
-    $("#orderError").slideDown();
-  }
-});
+        // Redirects to the orderid page
+        // window.location.href = `/order?orderId=${res["orderId"]}`
+      })
+    } else {
+      const emptyCartOrder = "Please enter items for the order";
+      $("#orderError").slideUp();
+      $("#orderError").text(emptyCartOrder);
+      $("#orderError").slideDown();
+    }
+  });
+
+  $('form').on('submit', function (event) {
+    event.preventDefault();
+
+    const queryString = $(this).serialize();
+    // const inputText = $(this).children("#name").val();
+    console.log("queryString", queryString);
+    // console.log("inputText", inputText)
+
+    $.ajax('/menu/admin/add', { method: 'POST' , data:queryString})
+    .then(function () {
+      loadMenuItems()
+
+      // $.ajax('/tweets/', { method: 'GET' })
+      // .then(function (res) {
+      //   const $tweet = createTweetElement(res[res.length-1]);
+      //   $('#tweets-container').prepend($tweet);
+      // });
+    });
+  });
 
 });
