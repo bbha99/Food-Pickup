@@ -50,13 +50,23 @@ const addFoodItem = (food) => {
   });
 };
 
-const toggleItem = (id) => {
-  console.log("in db query ",id)
-  return db.query('DELETE FROM foods WHERE id = $1;', [id])
-  .then(deletedData => {
-    console.log("we are in the deleted Query then block", deletedData);
-    return ({result: "toggled"});
+const getToggleValue = (id) => {
+  console.log("id", id)
+  return db.query(`SELECT * FROM foods WHERE id = $1`, [id])
+  .then(toggleValue => {
+    console.log("toggleValue", toggleValue.rows[0]);
+    return (toggleValue.rows[0]);
   });
 };
 
-module.exports = { getFoodItems, getFoodByOwnerId, addFoodItem, toggleItem };
+const toggleItem = (id, status) => {
+  console.log("in db query ",id)
+  console.log("statusstatus", status);
+  return db.query(`UPDATE foods SET toggle = $1 WHERE id = $2 RETURNING *;`, [status, id])
+  .then(updatedData => {
+    // console.log("we are in the toggled Query then block updatedData", updatedData);
+    return (updatedData.rows[0]);
+  });
+};
+
+module.exports = { getFoodItems, getFoodByOwnerId, addFoodItem, toggleItem, getToggleValue };

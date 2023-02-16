@@ -35,13 +35,26 @@ router.post('/admin/:id/edit', (req, res) => {
   const userRole = req.session.user_role;
 
   if (userRole === 'admin') {
-    const deletedId = req.params.id;
+    const toggleItemId = req.params.id;
 
-    console.log("TEST deletedId, userID, userRole ", deletedId, userId, userRole);
-    foodQueries.toggleItem(deletedId)
-    .then(item => {
-      console.log("this is the item deleted: ", item)
-      res.json({ item });
+    foodQueries.getToggleValue(toggleItemId)
+    .then(toggleStatus => {
+      let status = 'off';
+      if (toggleStatus.toggle === 'off') {
+        status = 'on';
+      }
+      console.log("status", status)
+
+      foodQueries.toggleItem(toggleItemId, status)
+      .then(toggle => {
+        console.log("toggleService", toggle)
+        res.json({ toggle });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({result: "error"});
+      });
     })
     .catch(err => {
       res

@@ -44,16 +44,39 @@ const loadMenuItems = function() {
     const $foodsList = $('.menu-items');
     $foodsList.empty();
 
+    const bodyId = $("body").attr('id');
+
     // response: {foods:..., prototype:...}
     for(const foodDataItem of response.foods) {
-      cartObject[foodDataItem.id] = {foodDataItem, quantity: 0};
-      const $foodItem = createFoodElement(foodDataItem);
-      $foodsList.append($foodItem);
+      if (foodDataItem.toggle !== 'on') {
+        cartObject[foodDataItem.id] = {foodDataItem, quantity: 0};
+        const $foodItem = createFoodElement(foodDataItem);
+        $foodsList.append($foodItem);
+
+        // Adds toggle food on/off button to each item on admin homepage
+        if (bodyId === "admin") {
+          const toggleStatus = foodDataItem.toggle
+          const toggleButton = $(`<button class="toggleItem">Toggle ${toggleStatus}</button>`);
+          $('#' + foodDataItem.id).find(".quantity-border").append(toggleButton);
+        }
+
+      } else if (bodyId === "admin") {
+        console.log("foodDataItem", foodDataItem)
+        cartObject[foodDataItem.id] = {foodDataItem, quantity: 0};
+        const $foodItem = createFoodElement(foodDataItem);
+        $foodsList.append($foodItem);
+
+        // Adds toggle food on/off button to each item on admin homepage
+        if (bodyId === "admin") {
+          const toggleStatus = foodDataItem.toggle
+          const toggleButton = $(`<button class="toggleItem">Toggle ${toggleStatus}</button>`);
+          $('#' + foodDataItem.id).find(".quantity-border").append(toggleButton);
+        }
+      }
+
     }
 
-    // Adds minus, plus button to each item on user homepage
-    const bodyId = $("body").attr('id');
-    const quantityDeleteButton = $(".quantity-border");
+    const toggleFoodButton = $(".quantity-border");
 
     if (bodyId === "customer") {
       const quantityButton = $(`
@@ -61,14 +84,10 @@ const loadMenuItems = function() {
       <p class="quantity">0</p>
       <button class="add">+</button>
       `);
-      quantityDeleteButton.append(quantityButton);
+      toggleFoodButton.append(quantityButton);
     }
 
-    // Adds delete button to each item on admin homepage
-    if (bodyId === "admin") {
-      const deleteButton = $(`<button class="deleteItem">Delete</button>`);
-      quantityDeleteButton.append(deleteButton);
-    }
+
 
     // Increments the displayed quantity and cart item quantity
     $('.add').on('click', function () {
@@ -132,21 +151,24 @@ const loadMenuItems = function() {
       }
     });
 
-    $('.deleteItem').on('click', function (event) {
+    $('.toggleItem').on('click', function (event) {
       const item = $(this).closest('.item-border')
       const itemId = item.attr('id');
+
       $.ajax({
         method: 'POST',
         url: `/menu/admin/${itemId}/edit`
       })
-      .then ((res) => {
-        if(res.item.result==="toggled"){
-          alert("Record toggled!");
+      .then ((toggleResult) => {
+        console.log("toggle status is::", toggleResult.toggle.toggle)
+        if (toggleResult.toggle.toggle === 'off') {
+          console.log("it was off")
+          $(this).text("Toggle off");
         } else {
+          console.log("it was on")
+          $(this).text("Toggle on");
 
         }
-        console.log("Deleted:", res.item.result);
-        item.remove();
       })
     });
   });
