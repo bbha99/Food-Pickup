@@ -1,9 +1,19 @@
 .orders {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
-  .order-item {
-    border-style: solid;
-    margin: 10px;
+
+  .order-details {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    border-radius: 15px 15px 15px 15px;
+    margin: 2.5%;
+  }
+
+  .food-item {
+    border-bottom: 1px solid grey;
   }
 }
 

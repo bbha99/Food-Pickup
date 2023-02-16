@@ -35,9 +35,9 @@ $(() => {
         if (currentId === data.order_id) {
           totalCost+= Number(data.price) / 100 * Number(data.quantity);
           $currentOrderDetails += `
-            <p>Item: ${data.foodname}</p>
-            <p>Price: $${data.price / 100 * data.quantity}</p>
-            <p>Quantity: ${data.quantity}</p>
+            <p>${data.quantity}</p>
+            <p>${data.foodname}</p>
+            <p>$${data.price / 100 * data.quantity}</p>
             `
           orderStatus = data.order_status;
           orderId = data.order_id;
@@ -73,12 +73,12 @@ $(() => {
           <p>Pickup has been confirmed.</p>
           `
         }
-        $currentOrder =$(`<div data-order-id="${orderId}">` + `<p>Order id: ${orderId}</p> <p>Customer: ${username}</p>` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Created at: ${created_at} </p> <p>Total Cost: $${totalCost.toFixed(2)}</p>`+ orderStatusOptions + `</div>`);
+        $currentOrder =$(`<div data-order-id="${orderId}" class="order-details">` + `<p>Order id: ${orderId}</p> <p>Customer: ${username}</p>` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Created at: ${created_at} </p> <p>Total Cost: $${totalCost.toFixed(2)}</p>`+ orderStatusOptions + `</div>`);
         $orders.append($currentOrder);
       }
 
       if (bodyId === "customer") {
-        $currentOrder =$(`<div data-order-id="${orderId}">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Created at: ${created_at} </p> <p>Total Cost: $${totalCost.toFixed(2)}</p>` + `</div>`);
+        $currentOrder =$(`<div data-order-id="${orderId}" class="order-details">` + $currentOrderDetails + `<p class="order-status">Order Status: ${orderStatus}</p> <p>Created at: ${created_at} </p> <p>Total Cost: $${totalCost.toFixed(2)}</p>` + `</div>`);
         $orders.append($currentOrder);
       }
     }
