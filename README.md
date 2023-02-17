@@ -1,5 +1,12 @@
-LHL Node Skeleton
-=========
+# Food Pick-up Ordering Project
+
+Sushi Emporium is a full stack web application where customers can receive SMS message updates about their order. The app was built with JQuery, Node and Express, PostgreSQL, Sass, and the use of Twilio for SMS messaging.
+
+## Final Product
+
+!["screenshot of user menu page"](https://github.com/bbha99/Food-Pickup/blob/master/docs/user-menu-page.png?raw=true)
+!["screenshot of admin menu page"](https://github.com/bbha99/Food-Pickup/blob/master/docs/admin-menu-page.png?raw=true)
+!["screenshot of admin order page"](https://github.com/bbha99/Food-Pickup/blob/master/docs/admin-order-page.png?raw=true)
 
 ## Project Setup
 
@@ -19,6 +26,10 @@ The following steps are only for _one_ of the group members to perform.
   - username: `labber` 
   - password: `labber` 
   - database: `midterm`
+  - twilio account id
+  - twilio authentication token
+  - phone number
+  - twilio phone number
 3. Install dependencies: `npm i`
 4. Fix to binaries for sass: `npm rebuild node-sass`
 5. Reset database: `npm run db:reset`
@@ -42,3 +53,9 @@ The following steps are only for _one_ of the group members to perform.
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
+- Node.js
+- Express
+- EJS
+- morgan
+- cookie-session
+- Twilio
