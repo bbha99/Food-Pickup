@@ -43,16 +43,13 @@ $(() => {
           const orderItemStatus = orderElement.find('.order-status');
           orderItemStatus.text("Order Status: " + res.orderData.order_status);
         }
-
-
-
       })
     });
   };
 
   const bodyId = $("body").attr('id');
 
-  // Displays the orders
+  // Displays the food orders onto the order page
   const renderOrders = (response) => {
     const orderIds = response.orderIds;
     const orderData = response.orders;
@@ -86,6 +83,7 @@ $(() => {
       let orderStatusOptions = ``;
       const quantityDeleteButton = $(".quantity-border");
 
+      // Admin order details display
       if (bodyId === "admin") {
         if (orderStatus === 'pending') {
           orderStatusOptions= `
@@ -114,6 +112,7 @@ $(() => {
         $orders.append($currentOrder);
       }
 
+      // Customer order details display
       if (bodyId === "customer") {
         $currentOrder =$(`<div data-order-id="${orderId}" class="order-details">` + `<div class="order-header"><p><strong>Created:</strong> ${created_at} </p></div> <div class="order-items"><p><strong>Order Details:</strong></p>` + $currentOrderDetails + `<p><strong>Total Cost:</strong> $${totalCost.toFixed(2)}</p></div> <div class="order-updates"><p class="order-status">Order Status: ${orderStatus}</p>` + `</div></div>`);
         $orders.append($currentOrder);
@@ -124,6 +123,8 @@ $(() => {
   };
 
   getOrders();
+
+  // Retrieves latest data for order status update
   if (bodyId === "customer") {
     setInterval(function(){
       getOrders();
