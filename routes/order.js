@@ -1,47 +1,9 @@
 const express = require('express');
 const router  = express.Router();
-
-// twilio configurations
-const twilio = require('twilio');
-
-const accountSid = `${process.env.TWILIO_ACCOUNTSID}`; // Your Account SID from www.twilio.com/console
-const authToken = `${process.env.TWILIO_AUTHTOKEN}` // Your Auth Token from www.twilio.com/console
-
-const client = require('twilio')(accountSid, authToken);
-
 const orderQueries = require('../db/queries/orders');
+const twilio = require('../lib/twilio');
 
-// Notify user by SMS that order is pending
-function pendingTwilio() {
-  client.messages
-  .create({
-    body: 'A new order has been made',
-    to: process.env.PHONE, // Text this number
-    from: `${process.env.TWILIO_PHONE}`, // From a valid Twilio number
-  })
-  .then((message) => console.log(message.sid));
-}
-
-function confirmTwilio(time) {
-  client.messages
-  .create({
-    body: `Order has has been confirmed. Time remaining is ${time} minutes`,
-    to: process.env.PHONE, // Text this number
-    from: `${process.env.TWILIO_PHONE}`, // From a valid Twilio number
-  })
-  .then((message) => console.log(message.sid));
-}
-
-function PickupReadyTwilio() {
-  client.messages
-  .create({
-    body: `Your order is ready for pickup!`,
-    to: process.env.PHONE, // Text this number
-    from: `${process.env.TWILIO_PHONE}`, // From a valid Twilio number
-  })
-  .then((message) => console.log(message.sid));
-}
-
+// Display the user order page
 router.get('/', (req, res) => {
   const userId = req.session.user_id;
   const userRole = req.session.user_role;
@@ -54,6 +16,7 @@ router.get('/', (req, res) => {
 
 });
 
+// Display the admin order page
 router.get('/admin', (req, res) => {
   const userId = req.session.user_id;
   const userRole = req.session.user_role;
@@ -65,7 +28,6 @@ router.get('/admin', (req, res) => {
   }
 
 });
-
 
 // Creates a new order and items associated with the order
 router.post('/', (req, res) => {
@@ -80,7 +42,7 @@ router.post('/', (req, res) => {
     .then(orderData => {
       const orderId = orderData.id;
 
-      pendingTwilio();
+      twilio.sendSMS('pending');
 
       // Add items and their quantities to order cart
       for (const cartItem in cartData) {
@@ -106,15 +68,13 @@ router.post('/edit', (req, res) => {
   const orderId = req.body.orderId;
 
   if (time) {
-    confirmTwilio(time);
+    twilio.sendTimeSMS(time);
   } else {
-    PickupReadyTwilio();
+    twilio.sendSMS('ready');
   }
-  console.log("TIME: ", time);
 
   orderQueries.updateOrderItem(orderId, time)
   .then(orderData => {
-    console.log("Updated Order")
     res.json({orderData})
   })
   .catch(err => {
