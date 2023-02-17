@@ -52,5 +52,66 @@
     font-family: "Francois One", sans-serif;
     border: none;
   }
+
 }
+
+/* Mobile Styles */
+@media only screen and (min-width: 600px) and (max-width: 850px) {
+  .orders {
+    justify-content: center;
+    padding: 1em;
+    .order-details {
+      flex-direction: column;
+      width: 60%;
+      padding: 2.5em;
+
+      .order-header{
+        border-right: none;
+        padding-left: 1em;
+        padding-right: 1em;
+        border-bottom: 1px solid grey;
+        padding-bottom: 1em;
+      }
+
+      .order-updates {
+        padding-left: none;
+        border-left: none;
+        padding-top: 1em;
+        border-top: 1px solid grey;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .orders {
+    justify-content: center;
+    padding: 1em;
+    width: 100%;
+
+    .order-details {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .order-header{
+      border-right: none;
+      padding-left: 1em;
+      padding-right: 1em;
+      border-bottom: 1px solid grey;
+      padding-bottom: 1em;
+    }
+
+    .order-updates {
+      padding-left: none;
+      border-left: none;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      border-top: 1px solid grey;
+      font-weight: bold;
+    }
+  }
+}
+
 

@@ -1,7 +1,7 @@
 #main-container {
   width: 80vw;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   position: absolute;
   top: 200px;
@@ -15,43 +15,43 @@
   border-top-right-radius: 30px 30px;
   box-shadow: 0 30px 40px rgba(0,0,0,.3);
 
+  .menu-header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    padding-bottom: 1em;
+    border-bottom: 1px solid grey;
+    font-size: 1.5em;
+    text-align: center;
+
+    .social-media {
+      display: flex;
+      justify-content: space-between;
+      width: 4em;
+      font-size: 1em;
+
+      i:hover {
+        font-size: 1.25em;
+      }
+    }
+  }
+
   .menu-food {
     display: flex;
-    width: 70%;
-    flex-direction: column;
+    width: 100%;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
 
     #name {
       font-size: 2em;
-    }
-
-    .menu-header {
-      display: flex;
-      flex-direction: column;
-      width: 90%;
-      align-items: center;
-      padding-bottom: 1em;
-      border-bottom: 1px solid grey;
-      font-size: 1.5em;
-
-      .social-media {
-        display: flex;
-        justify-content: space-between;
-        width: 4em;
-        font-size: 1em;
-
-        i:hover {
-          font-size: 1.25em;
-        }
-      }
     }
 
     .menu-items {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      width: 90%;
+      width: 70%;
 
       .item-border {
         flex-basis: 45%;
@@ -110,119 +110,208 @@
         }
       }
     }
+
+    .menu-cart {
+      width: 35%;
+      display: flex;
+      align-items: flex-start;
+      text-align: center;
+      font-size: 36px;
+      padding-top: 0.5em;
+      padding-right: 0.75em;
+
+      .new-tweet-form {
+        margin: 0.25em;
+        padding: 0.5em;
+        border: 1px solid grey;
+        border-radius: 15px 15px 15px 15px;
+        padding-bottom: 1em;
+
+        label {
+          font-family: 'Source Sans Pro', sans-serif;
+          font-weight: 300;
+          float: left;
+        }
+
+        input {
+          width: 100%;
+          border: 1px solid grey;
+          font-size: 1em;
+        }
+
+        input#name {
+          font-size: 1em;
+        }
+
+        #add-food {
+          background-color: black;
+          color: white;
+          font-family: "Francois One", sans-serif;
+          border: none;
+          margin-top: 1em;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 0.75em;
+        }
+      }
+
+      .customer-cart {
+        margin: 0.25em;
+        padding: 0.25em;
+        border: 1px solid grey;
+        border-radius: 15px 15px 15px 15px;
+        padding-bottom: 1em;
+      }
+
+      .cart-header {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        border-bottom: 1px solid grey;
+        padding: 2.5%;
+
+        .cart-title {
+          font-family: "Francois One", sans-serif;
+          font-size: 1.25em;
+        }
+      }
+
+      #location, #clock{
+        font-size: 0.6em;
+      }
+
+      #address {
+        font-size: 0.65em;
+      }
+
+      .cart-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid grey;
+        padding: 0.25em;
+
+        .itemQuantity {
+          font-size: 0.75em;
+          margin-right: 5%;
+        }
+
+        .item-name {
+          font-size: 0.75em;
+          text-align: left;
+          margin-right: 5%;
+        }
+
+        .item-description {
+          font-size: 0.5em;
+          text-align: left;
+          margin-right: 5%;
+        }
+
+        .price-total {
+          font-size: 0.75em;
+          width: 20%;
+        }
+      }
+
+      #order-button {
+        background-color: black;
+        color: white;
+        font-family: "Francois One", sans-serif;
+        border: none;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 0.65em;
+      }
+    }
   }
 
   .food-item:hover {
     box-shadow: 0 0 11px rgba(33,33,33,.2);
   }
 
-  .menu-cart {
-    width: 30%;
-    text-align: center;
-    font-size: 36px;
-    padding-top: 2em;
-    padding-right: 1em;
 
-    .new-tweet-form {
-      margin: 0.25em;
-      padding: 0.5em;
-      border: 1px solid grey;
-      border-radius: 15px 15px 15px 15px;
-      padding-bottom: 1em;
 
-      label {
-        font-family: 'Source Sans Pro', sans-serif;
-        font-weight: 300;
-        float: left;
-      }
+/* Mobile Styles */
+@media only screen and (min-width: 1000px) and (max-width: 1380px) {
+  .menu-food {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
 
-      input {
-        width: 100%;
-        border: 1px solid grey;
-      }
-
-      #add-food {
-        background-color: black;
-        color: white;
-        font-family: "Francois One", sans-serif;
-        border: none;
-        margin-top: 1em;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 0.75em;
-      }
-    }
-
-    .customer-cart {
-      margin: 0.25em;
-      padding: 0.25em;
-      border: 1px solid grey;
-      border-radius: 15px 15px 15px 15px;
-      padding-bottom: 1em;
-    }
-
-    .cart-header {
-      display: flex;
+    .menu-items {
       flex-direction: column;
+      flex-wrap: nowrap;
+      width: 50%;
+      padding-top:0.85em;
+    }
+
+    .menu-cart {
+      width: 45%;
+      padding-right: 0;
+    }
+  }
+
+}
+
+@media only screen and (max-width: 999px) {
+  .menu-food {
+    display: flex;
+    width: 100%;
+    flex-direction: column-reverse;
+    justify-content: center;
+    padding: 0.5em;
+
+    .menu-items {
+      flex-direction: column;
+      flex-wrap: nowrap;
       width: 100%;
-      border-bottom: 1px solid grey;
-      padding: 2.5%;
-
-      .cart-title {
-        font-family: "Francois One", sans-serif;
-        font-size: 1.25em;
-      }
+      padding-top:0.85em;
     }
 
-    #location, #clock{
-      font-size: 0.6em;
-    }
+    .menu-cart {
+      justify-content: center;
+      width: 100%;
+      padding: 0;
+      margin: 0;
 
-    #address {
-      font-size: 0.65em;
-    }
-
-    .cart-item {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
-      border-bottom: 1px solid grey;
-      padding: 0.25em;
-
-      .itemQuantity {
-        font-size: 0.75em;
-        margin-right: 5%;
+      .customer-cart {
+        .cart-item {
+          justify-content: start;
+        }
       }
-
-      .item-name {
-        font-size: 0.75em;
-        text-align: left;
-        margin-right: 5%;
-      }
-
-      .item-description {
-        font-size: 0.5em;
-        text-align: left;
-        margin-right: 5%;
-      }
-
-      .price-total {
-        font-size: 0.75em;
-        width: 20%;
-      }
-    }
-
-    #order-button {
-      background-color: black;
-      color: white;
-      font-family: "Francois One", sans-serif;
-      border: none;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      font-size: 0.65em;
     }
   }
 }
+
+@media only screen and (max-width: 460px) {
+  .menu-food {
+    .menu-cart {
+      .cart-item {
+        flex-direction: column;
+        align-items: center;
+
+        .item-name {
+          text-align: center;
+        }
+
+        .item-description {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+}
+
+@media only screen and (max-width: 370px) {
+  #main-container {
+    top: 250px;
+  }
+}
+
