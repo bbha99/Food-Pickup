@@ -10,11 +10,12 @@ const router  = express.Router();
 
 const userQueries = require('../db/queries/users');
 
+// Displays the sample user page
 router.get('/', (req, res) => {
   res.render('users');
 });
 
-// Login a specific user
+// Login as a specific user
 router.get('/:id', (req, res) => {
   const id = req.params.id;
   userQueries.checkUserRole(id)
@@ -30,6 +31,7 @@ router.get('/:id', (req, res) => {
   .catch(e => res.send(e.message));
 });
 
+// Logout of a user session
 router.post("/logout", (req, res) => {
   req.session = null;
   res.redirect('../');

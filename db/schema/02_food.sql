@@ -7,5 +7,4 @@ CREATE TABLE foods (
   price INTEGER NOT NULL DEFAULT 0,
   toggle VARCHAR(255) DEFAULT 'off',
   owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
-  -- active Boolean NOT NULL
 );
