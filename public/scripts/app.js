@@ -1,4 +1,5 @@
 // Client facing scripts here
+
 $(() => {
 
   // Creates the food item DOM elements
@@ -17,7 +18,7 @@ $(() => {
     return $food;
   };
 
-  // Display food itms in cart
+  // Display food items in cart
   const createCartElement = function(cartObj, id) {
     const item = cartObj.foodDataItem;
     const quantity = cartObj.quantity;
@@ -33,6 +34,8 @@ $(() => {
 
     return $cartItem;
   };
+
+  let cartObject = {};
 
   // Creates a new order with the cart items
   const orderButtonEvent = () => {
@@ -77,7 +80,7 @@ $(() => {
       const queryString = $(this).serialize();
       const inputText = $(this).children("#image").val();
       inputText.onerror = function() {
-        alert('Invalid image');
+        console.log("Invalid Image Url");
       };
 
       $.ajax('/menu/admin/add', { method: 'POST' , data:queryString})
@@ -124,7 +127,7 @@ $(() => {
   }
 
   // Decrements the selected food item count
-  const decrementItemCount = () => {
+  const decrementItemCount = (response) => {
     // Decrements the displayed quantity and cart item quantity
     $('.subtract').on('click', function() {
       const foodParentId = $(this).closest('div').parent();
@@ -176,7 +179,7 @@ $(() => {
     });
   };
 
-  let cartObject = {};
+
 
   // Adds all the food items to homepage
   const loadMenuItems = function() {
@@ -204,16 +207,16 @@ $(() => {
             }
 
           } else if (bodyId === "admin") {
-            cartObject[foodDataItem.id] = {foodDataItem, quantity: 0};
-            const $foodItem = createFoodElement(foodDataItem);
-            $foodsList.append($foodItem);
+              cartObject[foodDataItem.id] = {foodDataItem, quantity: 0};
+              const $foodItem = createFoodElement(foodDataItem);
+              $foodsList.append($foodItem);
 
-            // Adds toggle food on/off button to each item on admin homepage
-            if (bodyId === "admin") {
-              const toggleStatus = foodDataItem.toggle;
-              const toggleButton = $(`<button class="toggleItem">Toggle ${toggleStatus}</button>`);
-              $('#' + foodDataItem.id).find(".quantity-border").append(toggleButton);
-            }
+              // Adds toggle food on/off button to each item on admin homepage
+              if (bodyId === "admin") {
+                const toggleStatus = foodDataItem.toggle;
+                const toggleButton = $(`<button class="toggleItem">Toggle ${toggleStatus}</button>`);
+                $('#' + foodDataItem.id).find(".quantity-border").append(toggleButton);
+              }
           }
 
         }
@@ -230,7 +233,7 @@ $(() => {
         }
 
         incrementItemCount();
-        decrementItemCount();
+        decrementItemCount(response);
         toggleItemVisibility();
 
       });
