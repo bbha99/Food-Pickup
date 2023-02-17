@@ -1,6 +1,7 @@
 // Client facing scripts here
 $(() => {
 
+  // Gets all the orders from the database
   const getOrders = () => {
     $.ajax({
       method: 'GET',
@@ -10,16 +11,54 @@ $(() => {
       renderOrders(response);
     });
   };
+
+  // Notifies the user of the time selected
+  const selectTimeEstimation = () => {
+    $(".time-option").on('click', function () {
+      const selectedTime = $(this).text();
+
+      const orderElement = $(this).closest("[data-order-id]");
+      const orderId = orderElement.data("order-id");
+
+      $.ajax({
+        method: 'POST',
+        url: '/order/edit',
+        data: { selectedTime, orderId }
+      })
+      .then ((res) => {
+
+        const timeOption = $(this).closest(".ready-status");
+        $(this).parent().find(".time-option").hide()
+
+        if (res.orderData.order_status === 'Not Ready') {
+          $(this).show()
+          $(this).text("Ready for Pickup");
+
+          const orderItemStatus = orderElement.find('.order-status');
+          orderItemStatus.text("Order Status: " + res.orderData.order_status);
+        } else {
+          timeOption.append($(`
+          <p class="pickup-option">Pickup has been confirmed.</p>
+          `));
+          const orderItemStatus = orderElement.find('.order-status');
+          orderItemStatus.text("Order Status: " + res.orderData.order_status);
+        }
+
+
+
+      })
+    });
+  };
+
   const bodyId = $("body").attr('id');
 
+  // Displays the orders
   const renderOrders = (response) => {
     const orderIds = response.orderIds;
     const orderData = response.orders;
 
     $orders = $(".orders");
     $orders.empty();
-    console.log("orderIds", orderIds)
-    console.log("orderData", orderData)
 
     // Display the orders to the admin
     for (let i = 0; i < orderIds.length; i++) {
@@ -46,7 +85,6 @@ $(() => {
       }
       let orderStatusOptions = ``;
       const quantityDeleteButton = $(".quantity-border");
-      // console.log("bodyId", bodyId);
 
       if (bodyId === "admin") {
         if (orderStatus === 'pending') {
@@ -82,44 +120,7 @@ $(() => {
       }
     }
 
-    $(".time-option").on('click', function () {
-      const selectedTime = $(this).text();
-
-      const orderElement = $(this).closest("[data-order-id]");
-      const orderId = orderElement.data("order-id");
-
-      console.log("orderId", orderId)
-      $.ajax({
-        method: 'POST',
-        url: '/order/edit',
-        data: { selectedTime, orderId }
-      })
-      .then ((res) => {
-
-        const timeOption = $(this).closest(".ready-status");
-        $(this).parent().find(".time-option").hide()
-
-        console.log("res", res)
-        console.log("res.orderData", res.orderData);
-
-        if (res.orderData.order_status === 'Not Ready') {
-          $(this).show()
-          $(this).text("Ready for Pickup");
-
-          const orderItemStatus = orderElement.find('.order-status');
-          orderItemStatus.text("Order Status: " + res.orderData.order_status);
-        } else {
-          timeOption.append($(`
-          <p class="pickup-option">Pickup has been confirmed.</p>
-          `));
-          const orderItemStatus = orderElement.find('.order-status');
-          orderItemStatus.text("Order Status: " + res.orderData.order_status);
-        }
-
-
-
-      })
-    });
+    selectTimeEstimation();
   };
 
   getOrders();
