@@ -11,7 +11,7 @@ const userQueries = require('../db/queries/users');
 const foodQueries = require('../db/queries/foods');
 const orderQueries = require('../db/queries/orders');
 
-
+// Returns the user data
 router.get('/', (req, res) => {
   userQueries.getUsers()
     .then(users => {
@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
     });
 });
 
-// Sends back the food items to the frontend
+// Returns the food data
 router.get('/food', (req, res) => {
   foodQueries.getFoodItems()
   .then(foods => {
@@ -32,12 +32,12 @@ router.get('/food', (req, res) => {
   });
 });
 
+// Returns the order data
 router.get('/order', (req, res) => {
   orderQueries.getOrderItems()
   .then(orders => {
     orderQueries.getOrderIds()
     .then(orderIds => {
-      console.log("order ids are:", orderIds);
       res.json({orders, orderIds});
     });
   });
